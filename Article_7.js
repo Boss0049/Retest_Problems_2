@@ -1,28 +1,30 @@
 let allNumber = [];
-let total = [];
-let cranberry = [];
-let turn = 3;
 while (true) {
   let num = prompt("Input Number");
   if (num == "stop") {
     break;
   }
-  allNumber.push(num);
+  allNumber.push(+num);
 }
-allNumber.sort((a, b) => a - b);
-while (turn > 0) {
-  for (let i = 2; i <= allNumber[0]; i++) {
-    let count = 0;
-    for (let j = 0; j < allNumber.length; j++) {
-      if (allNumber[j] % i == 0) {
-        count++;
-        if (count == allNumber.length) {
-          allNumber = allNumber.map((item) => item / i);
-          cranberry.push(i);
-        }
+function ครน(allNumber) {
+  let result1 = 0,
+    result2 = 0;
+  let l = allNumber.length;
+  for (i = 0; i < l; i++) {
+    result1 = allNumber[i] % allNumber[i + 1];
+    if (result1 === 0) {
+      allNumber[i + 1] = (allNumber[i] * allNumber[i + 1]) / allNumber[i + 1];
+    } else {
+      result2 = allNumber[i + 1] % result1;
+      if (result2 === 0) {
+        allNumber[i + 1] = (allNumber[i] * allNumber[i + 1]) / result1;
+      } else {
+        allNumber[i + 1] = (allNumber[i] * allNumber[i + 1]) / result2;
       }
     }
   }
-  turn--;
+  return allNumber[l - 1];
 }
-console.log(cranberry.reduce((a, b) => a * b));
+
+console.log(ครน(allNumber));
+// console.log(lcm_more_than_two_numbers([5, 10, 15, 25]));
